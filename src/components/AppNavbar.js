@@ -28,6 +28,7 @@ export default class AppNavbar extends Component {
     });
   }
   render() {
+    const genres = this.props.genres;
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -39,19 +40,18 @@ export default class AppNavbar extends Component {
                 <NavLink href="/components/">Components</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">
+                <NavLink href="https://github.com/pragin/react-moviesite">
                   GitHub
                 </NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Options
+                  Genres
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>Option 1</DropdownItem>
-                  <DropdownItem>Option 2</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
+                  {genres.map(genre => (
+                    <DropdownItem key={genre.id}>{genre.name}</DropdownItem>
+                  ))}
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>

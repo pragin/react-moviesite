@@ -12,11 +12,14 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
-      buttonColor: "primary",
+      genres: [],
+      buttonColor: "secondary",
       hasError: false
     };
 
     this.changeColor = this.changeColor.bind(this);
+    this.getMovies = this.getMovies.bind(this);
+    this.getGenres = this.getGenres.bind(this);
   }
 
   componentDidCatch(error, info) {
@@ -26,6 +29,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    this.getGenres();
     axios
       .get(
         "https://api.themoviedb.org/3/movie/popular?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=1"
@@ -45,7 +49,31 @@ class App extends Component {
     }
   }
 
-  getMovies()
+  getMovies(opt = "popular") {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/movie/" +
+          `${opt}` +
+          "?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=1"
+      )
+      .then(response => {
+        console.log(response.data.results);
+        this.setState({ movies: response.data.results });
+      })
+      .catch(err => console.log(err));
+  }
+
+  getGenres() {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/genre/movie/list?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US"
+      )
+      .then(response => {
+        console.log(response.data.genres);
+        this.setState({ genres: response.data.genres });
+      })
+      .catch(err => console.log(err));
+  }
 
   render() {
     if (this.state.hasError) {
@@ -53,11 +81,12 @@ class App extends Component {
     }
     return (
       <div>
-        <AppNavbar />
+        <AppNavbar genres={this.state.genres} />
         <div className="movies-bar">
           <MoviesBar
             buttonColor={this.state.buttonColor}
             changeColor={this.changeColor}
+            getMovies={this.getMovies}
           />
         </div>
         <MoviesList movies={this.state.movies} />

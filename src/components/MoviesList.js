@@ -6,12 +6,11 @@ import "../css/custom.css";
 class MoviesList extends Component {
   render() {
     let movies;
-    //const {getMovies} = this.props.getMovies;
     if (this.props.movies) {
       movies = this.props.movies.map(movie => {
         return (
-          <Col sm={3} key={movie.id}>
-            <MovieItem movie={movie} />
+          <Col key={movie.id} sm={3}>
+            <MovieItem movie={movie} key={movie.id} />
           </Col>
         );
       });

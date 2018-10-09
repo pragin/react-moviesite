@@ -18,15 +18,9 @@ class MovieItem extends Component {
       <Card className="mt-4">
         <CardImg
           top
-          // wposter_pathth="100%"
-          src={"https://image.tmdb.org/t/p/w300/" + poster_path}
+          src={"https://image.tmdb.org/t/p/w300/" + `${poster_path}`}
           alt="Card image cap"
         />
-        {/* <CardBody>
-          <CardTitle>Title: {this.props.movie.title}</CardTitle>
-          <CardSubtitle>Year: {this.props.movie.release_date}</CardSubtitle>
-          <CardText>Desc: {this.props.movie.overview}</CardText>
-        </CardBody> */}
       </Card>
     );
   }
