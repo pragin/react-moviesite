@@ -20,6 +20,7 @@ class App extends Component {
     this.changeColor = this.changeColor.bind(this);
     this.getMovies = this.getMovies.bind(this);
     this.getGenres = this.getGenres.bind(this);
+    this.getMoviesBasedOnGenre = this.getMoviesBasedOnGenre.bind(this);
   }
 
   componentDidCatch(error, info) {
@@ -29,7 +30,10 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.getGenres();
+    if (this.state.genres.length === 0) {
+      this.getGenres();
+    }
+
     axios
       .get(
         "https://api.themoviedb.org/3/movie/popular?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=1"
@@ -57,12 +61,13 @@ class App extends Component {
           "?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=1"
       )
       .then(response => {
-        console.log(response.data.results);
+        //console.log(response.data.results);
         this.setState({ movies: response.data.results });
       })
       .catch(err => console.log(err));
   }
 
+  /**This method is fired when the genres drop down is clicked */
   getGenres() {
     axios
       .get(
@@ -75,13 +80,32 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  /** This method is fired when a genre on the genres dropdown is clicked */
+  getMoviesBasedOnGenre(genreID = 28) {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/discover/movie?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" +
+          `${genreID}`
+      )
+      .then(response => {
+        console.log(response.data.results);
+        this.setState({ movies: response.data.results });
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     if (this.state.hasError) {
       return <h1>Somethig went wrong</h1>;
     }
+
     return (
       <div>
-        <AppNavbar genres={this.state.genres} />
+        <AppNavbar
+          getMoviesBasedOnGenre={this.getMoviesBasedOnGenre}
+          getGenres={this.getGenres}
+          genres={this.state.genres}
+        />
         <div className="movies-bar">
           <MoviesBar
             buttonColor={this.state.buttonColor}

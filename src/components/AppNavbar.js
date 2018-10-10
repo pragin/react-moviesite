@@ -18,6 +18,7 @@ export default class AppNavbar extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+
     this.state = {
       isOpen: false
     };
@@ -27,6 +28,7 @@ export default class AppNavbar extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
     const genres = this.props.genres;
     return (
@@ -50,7 +52,12 @@ export default class AppNavbar extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   {genres.map(genre => (
-                    <DropdownItem key={genre.id}>{genre.name}</DropdownItem>
+                    <DropdownItem
+                      key={genre.id}
+                      onClick={() => this.props.getMoviesBasedOnGenre(genre.id)}
+                    >
+                      {genre.name}
+                    </DropdownItem>
                   ))}
                 </DropdownMenu>
               </UncontrolledDropdown>

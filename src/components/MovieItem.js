@@ -13,7 +13,13 @@ import {
 
 class MovieItem extends Component {
   render() {
-    const poster_path = this.props.movie.poster_path;
+    let poster_path;
+    if (this.props.movie.poster_path) {
+      poster_path = this.props.movie.poster_path;
+    } else {
+      poster_path =
+        "https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180";
+    }
     return (
       <Card className="mt-4">
         <CardImg
