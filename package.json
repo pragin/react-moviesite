@@ -2,6 +2,10 @@
   "name": "react-moviesite",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": "5.5.1",
+    "node": "8.9.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
