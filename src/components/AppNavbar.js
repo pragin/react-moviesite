@@ -39,9 +39,6 @@ export default class AppNavbar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink href="https://github.com/pragin/react-moviesite">
                   GitHub
                 </NavLink>

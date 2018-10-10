@@ -15,10 +15,37 @@
 
 /*Footer styles*/
 .footer {
-  height: 200px;
+  height: 150px;
   background-color: black;
+  margin-top: 20px;
 }
 
+.social {
+  color: white;
+  padding-right: 10px;
+}
+
+.social:hover {
+  color: #71a2d1;
+}
+
+.social-wrapper {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.website-wrapper {
+  text-align: center;
+  color: white;
+}
+.website-link {
+  text-decoration: none;
+  color: white;
+}
+.website-link:hover {
+  text-decoration: none;
+  color: #71a2d1;
+}
 /*Old Css*/
 .project {
   position: relative;
