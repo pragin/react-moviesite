@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import { Button, ButtonGroup } from "reactstrap";
+import PropTypes from "prop-types";
 
 export default class MoviesBar extends Component {
   render() {
-    let { buttonColor, changeColor, getMovies } = this.props;
+    let { buttonColor, getMovies } = this.props;
 
     return (
       <ButtonGroup>
         <Button
-          className=""
+          className="trending"
           name="popular"
           color={buttonColor}
           onClick={() => getMovies("popular")}
         >
           Popular
         </Button>
-        <Button color={buttonColor} onClick={() => getMovies("now_playing")}>
+        <Button
+          className="trending"
+          color={buttonColor}
+          onClick={() => getMovies("now_playing")}
+        >
           Now Playing
         </Button>
         <Button
+          className="trending"
           name="top-rated"
           color={buttonColor}
           onClick={() => getMovies("top_rated")}
@@ -26,6 +32,7 @@ export default class MoviesBar extends Component {
           Top Rated
         </Button>
         <Button
+          className="trending"
           name="upcomoing"
           color={buttonColor}
           onClick={() => getMovies("upcoming")}
@@ -36,3 +43,15 @@ export default class MoviesBar extends Component {
     );
   }
 }
+
+//Declare props
+MoviesBar.propTypes = {
+  buttonColor: PropTypes.string.isRequired,
+  getMovies: PropTypes.func.isRequired
+};
+
+//Default values for propes
+MoviesBar.defaultProps = {
+  buttonColor: "secondary",
+  getMovies: () => {}
+};

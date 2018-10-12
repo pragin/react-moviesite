@@ -58,6 +58,9 @@ export default class AppNavbar extends Component {
                   ))}
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <NavItem>
+                <NavLink>Login</NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

@@ -1,26 +1,28 @@
 import React, { Component } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import { Container } from "reactstrap";
 import MoviesList from "./MoviesList";
 import AppNavbar from "./AppNavbar";
+import Pagination from "./Pagination";
 import MoviesBar from "./MoviesBar";
 import Footer from "./Footer";
 import "../css/custom.css";
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super();
     this.state = {
       movies: [],
       genres: [],
-      buttonColor: "secondary",
+      currentPage: 1,
       hasError: false
     };
 
-    this.changeColor = this.changeColor.bind(this);
     this.getMovies = this.getMovies.bind(this);
     this.getGenres = this.getGenres.bind(this);
     this.getMoviesBasedOnGenre = this.getMoviesBasedOnGenre.bind(this);
+    this.setPage = this.setPage.bind(this);
   }
 
   componentDidCatch(error, info) {
@@ -29,7 +31,7 @@ class App extends Component {
     logErrorToMyService(error, info);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.state.genres.length === 0) {
       this.getGenres();
     }
@@ -44,13 +46,6 @@ class App extends Component {
         this.setState({ movies: response.data.results });
       })
       .catch(err => console.log(err));
-  }
-
-  changeColor(buttonColor) {
-    const currentColor = this.state.buttonColor;
-    if (currentColor != buttonColor) {
-      this.setState({ buttonColor: buttonColor });
-    }
   }
 
   getMovies(opt = "popular") {
@@ -94,6 +89,15 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  setPage(pageNumber) {
+    if (this.state.currentPage != 0) {
+      this.setState({ currentPage: this.state.currentPage + pageNumber });
+    }
+    let currentPage = this.state.currentPage + pageNumber;
+    this.setState({ currentPage: this.state.currentPage + pageNumber });
+    console.log("Current Page : " + this.state.currentPage);
+  }
+
   render() {
     if (this.state.hasError) {
       return <h1>Somethig went wrong</h1>;
@@ -109,10 +113,16 @@ class App extends Component {
         <div className="movies-bar">
           <MoviesBar
             buttonColor={this.state.buttonColor}
-            changeColor={this.changeColor}
             getMovies={this.getMovies}
           />
         </div>
+        <div className="pages">
+          <Pagination
+            setPage={this.setPage}
+            currentPage={this.state.currentPage}
+          />
+        </div>
+
         <MoviesList movies={this.state.movies} />
         <Footer />
       </div>
@@ -120,4 +130,8 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  currentPage: PropTypes.number.isRequired
+};
+
+App.defaultProps = { currentPage: 1 };

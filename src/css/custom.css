@@ -1,11 +1,27 @@
 .movies-bar {
   height: 50px;
   width: 100%;
-  /* border: 1px solid green; */
   margin-top: 10px;
   margin-bottom: 0px;
   text-align: center;
 }
+
+.trending:focus,
+.trending:active:focus,
+.trending.active:focus {
+  color: #ebf38b;
+}
+
+/*Pagination styles*/
+.prev-next-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.page-control {
+  margin: 5px;
+}
+/*End of pagination styles*/
 
 .row {
   margin: 0px;
