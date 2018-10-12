@@ -11,6 +11,12 @@ export default class Pagination extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentPage !== this.props.currentPage) {
+      this.setState({ currentPage: this.props.currentPage });
+    }
+  }
+
   render() {
     return (
       <div className="prev-next-wrapper">
@@ -18,12 +24,12 @@ export default class Pagination extends Component {
           className="page-control"
           color="info"
           onClick={() => {
-            this.props.setPage(-1);
+            this.state.currentPage !== 1 ? this.props.setPage(-1) : "";
           }}
         >
           Prev
         </Button>
-        <Button className="page-control" color="success">
+        <Button disabled className="button-currentpage" color="success">
           {this.state.currentPage}
         </Button>
         <Button

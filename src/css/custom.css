@@ -15,11 +15,19 @@
 /*Pagination styles*/
 .prev-next-wrapper {
   width: 100%;
+  /* border: 1px solid red; */
+  margin-top: 5px;
   text-align: center;
 }
 
 .page-control {
   margin: 5px;
+  width: 75px;
+}
+
+.button-currentpage {
+  display: inline-block;
+  width: 75px;
 }
 /*End of pagination styles*/
 

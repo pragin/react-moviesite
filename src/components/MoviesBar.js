@@ -4,22 +4,26 @@ import PropTypes from "prop-types";
 
 export default class MoviesBar extends Component {
   render() {
-    let { buttonColor, getMovies } = this.props;
+    let { buttonColor, getMovies, setCurrentPageToOne } = this.props;
 
+    const runFunctions = getMoviesParameter => {
+      setCurrentPageToOne();
+      getMovies(getMoviesParameter);
+    };
     return (
       <ButtonGroup>
         <Button
           className="trending"
           name="popular"
           color={buttonColor}
-          onClick={() => getMovies("popular")}
+          onClick={() => runFunctions("popular")}
         >
           Popular
         </Button>
         <Button
           className="trending"
           color={buttonColor}
-          onClick={() => getMovies("now_playing")}
+          onClick={() => runFunctions("now_playing")}
         >
           Now Playing
         </Button>
@@ -27,7 +31,7 @@ export default class MoviesBar extends Component {
           className="trending"
           name="top-rated"
           color={buttonColor}
-          onClick={() => getMovies("top_rated")}
+          onClick={() => runFunctions("top_rated")}
         >
           Top Rated
         </Button>
@@ -35,7 +39,7 @@ export default class MoviesBar extends Component {
           className="trending"
           name="upcomoing"
           color={buttonColor}
-          onClick={() => getMovies("upcoming")}
+          onClick={() => runFunctions("upcoming")}
         >
           Upcoming
         </Button>

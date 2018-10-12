@@ -23,6 +23,7 @@ export default class App extends Component {
     this.getGenres = this.getGenres.bind(this);
     this.getMoviesBasedOnGenre = this.getMoviesBasedOnGenre.bind(this);
     this.setPage = this.setPage.bind(this);
+    this.setCurrentPageToOne = this.setCurrentPageToOne.bind(this);
   }
 
   componentDidCatch(error, info) {
@@ -48,12 +49,13 @@ export default class App extends Component {
       .catch(err => console.log(err));
   }
 
-  getMovies(opt = "popular") {
+  getMovies(opt = "popular", pageNumber = 1) {
     axios
       .get(
         "https://api.themoviedb.org/3/movie/" +
           `${opt}` +
-          "?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=1"
+          "?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&page=" +
+          `${pageNumber}`
       )
       .then(response => {
         //console.log(response.data.results);
@@ -69,21 +71,23 @@ export default class App extends Component {
         "https://api.themoviedb.org/3/genre/movie/list?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US"
       )
       .then(response => {
-        console.log(response.data.genres);
+        //console.log(response.data.genres);
         this.setState({ genres: response.data.genres });
       })
       .catch(err => console.log(err));
   }
 
   /** This method is fired when a genre on the genres dropdown is clicked */
-  getMoviesBasedOnGenre(genreID = 28) {
+  getMoviesBasedOnGenre(genreID = 28, pageNumber = 1) {
     axios
       .get(
-        "https://api.themoviedb.org/3/discover/movie?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" +
+        "https://api.themoviedb.org/3/discover/movie?api_key=575152ea8aba130baa79849ce4e22c04&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" +
+          `${pageNumber}` +
+          "&with_genres=" +
           `${genreID}`
       )
       .then(response => {
-        console.log(response.data.results);
+        //console.log(response.data.results);
         this.setState({ movies: response.data.results });
       })
       .catch(err => console.log(err));
@@ -93,9 +97,10 @@ export default class App extends Component {
     if (this.state.currentPage != 0) {
       this.setState({ currentPage: this.state.currentPage + pageNumber });
     }
-    let currentPage = this.state.currentPage + pageNumber;
-    this.setState({ currentPage: this.state.currentPage + pageNumber });
-    console.log("Current Page : " + this.state.currentPage);
+  }
+
+  setCurrentPageToOne() {
+    this.setState({ currentPage: 1 });
   }
 
   render() {
@@ -114,16 +119,17 @@ export default class App extends Component {
           <MoviesBar
             buttonColor={this.state.buttonColor}
             getMovies={this.getMovies}
+            setCurrentPageToOne={this.setCurrentPageToOne}
           />
         </div>
-        <div className="pages">
-          <Pagination
-            setPage={this.setPage}
-            currentPage={this.state.currentPage}
-          />
-        </div>
+        <Pagination
+          setPage={this.setPage}
+          currentPage={this.state.currentPage}
+        />
+        <div className="pages" />
 
         <MoviesList movies={this.state.movies} />
+
         <Footer />
       </div>
     );
